@@ -4,20 +4,20 @@ import 'package:mockito/mockito.dart';
 import 'package:pmvvn_test/core/activity_manager.dart';
 import 'package:pmvvn_test/model/activity_model.dart';
 import 'package:pmvvn_test/repository/activity/activity_repository_contract.dart';
-import 'package:pmvvn_test/ui/home_page/home_page_viewmodel.dart';
+import 'package:pmvvn_test/ui/home_page_stacked/home_page_viewmodel_stacked.dart';
 
 import 'home_page_test.mocks.dart';
 
 @GenerateMocks([ActivityRepositoryContract])
 void main() {
-  late HomePageViewModel viewModel;
+  late HomePageViewModelStacked viewModel;
   late ActivityManager activityManager;
   late MockActivityRepositoryContract activityRepository;
   group("HomePageViewModel", () {
     setUp(() {
       activityRepository = MockActivityRepositoryContract();
       activityManager = ActivityManager(activityRepository: activityRepository);
-      viewModel = HomePageViewModel(activityManager: activityManager);
+      viewModel = HomePageViewModelStacked(activityManager: activityManager);
     });
 
     test("Expect success when getting activity", () async {

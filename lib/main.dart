@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pmvvn_test/core/activity_manager.dart';
 import 'package:pmvvn_test/repository/activity/activity_repository.dart';
 
-import 'package:pmvvn_test/ui/home_page/home_page.dart';
+import 'package:pmvvn_test/ui/home_page_stacked/home_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -11,8 +11,9 @@ void main() {
       builder: (context, child) => const MyApp(),
       providers: [
         Provider(
-          create: (context) =>
-              ActivityManager(activityRepository: ActivityRepository()),
+          create: (context) => ActivityManager(
+            activityRepository: ActivityRepository(),
+          ),
         )
       ],
     ),

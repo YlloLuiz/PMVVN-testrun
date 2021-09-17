@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:pmvvm/pmvvm.dart';
 import 'package:pmvvn_test/core/activity_manager.dart';
-import 'package:pmvvn_test/ui/home_page/home_page_viewmodel.dart';
+import 'package:pmvvn_test/ui/home_page_stacked/home_page_viewmodel_stacked.dart';
+import 'package:provider/src/provider.dart';
+import 'package:stacked/stacked.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MVVM<HomePageViewModel>(
-      view: (context, viewModel) => const _HomePage(),
-      viewModel: HomePageViewModel(
+    return ViewModelBuilder<HomePageViewModelStacked>.reactive(
+      builder: (context, viewModel, _) => HomeLayout(viewModel: viewModel),
+      viewModelBuilder: () => HomePageViewModelStacked(
         activityManager: context.read<ActivityManager>(),
       ),
     );
   }
 }
 
-class _HomePage extends StatelessView<HomePageViewModel> {
-  const _HomePage({Key? key}) : super(key: key, reactive: true);
+class HomeLayout extends StatelessWidget {
+  final HomePageViewModelStacked viewModel;
+
+  const HomeLayout({Key? key, required this.viewModel}) : super(key: key);
 
   @override
-  Widget render(BuildContext context, HomePageViewModel viewModel) {
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF190834),
       body: Column(
