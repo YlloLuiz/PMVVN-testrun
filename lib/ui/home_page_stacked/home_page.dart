@@ -14,6 +14,7 @@ class HomePage extends StatelessWidget {
       viewModelBuilder: () => HomePageViewModelStacked(
         activityManager: context.read<ActivityManager>(),
       ),
+      createNewModelOnInsert: false,
     );
   }
 }
@@ -40,33 +41,35 @@ class HomeLayout extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: Center(
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    text:
-                        "${viewModel.activity == null ? "Are you bored? let me find something for you" : viewModel.activity?.activity}\n\n",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                    children: [
-                      TextSpan(
-                        text: viewModel.activity != null
-                            ? "Price: \$ ${viewModel.activity?.price}\n\n"
-                            : "",
-                        style: TextStyle(fontSize: 14),
-                      ),
-                      TextSpan(
-                        text: viewModel.activity != null
-                            ? "How many people can join: ${viewModel.activity?.participants}"
-                            : "",
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    ],
-                  ),
-                ),
+                child: viewModel.isBusy == false
+                    ? RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          text:
+                              "${viewModel.activity == null ? "Are you bored? let me find something for you" : viewModel.activity?.activity}\n\n",
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                          children: [
+                            TextSpan(
+                              text: viewModel.activity != null
+                                  ? "Price: \$ ${viewModel.activity?.price}\n\n"
+                                  : "",
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            TextSpan(
+                              text: viewModel.activity != null
+                                  ? "How many people can join: ${viewModel.activity?.participants}"
+                                  : "",
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          ],
+                        ),
+                      )
+                    : CircularProgressIndicator(),
               ),
             ),
           ),
           TextButton(
-            onPressed: () async => await viewModel.getActivity(),
+            onPressed: () async => await viewModel.futureToRun(),
             child: Text("Find me something to do!"),
           )
         ],
